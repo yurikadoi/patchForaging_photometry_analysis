@@ -16,7 +16,7 @@ VS_all_lick_precede_trial_gcamp_matrix=[];
 DLS_all_lick_no_precede_trial_gcamp_matrix=[];
 DLS_all_lick_precede_trial_gcamp_matrix=[];
 %%
-for i = 37: length(subFolders)
+for i = 3: length(subFolders)
     files = dir('C:\Users\kuros\Documents\MATLAB\photometry_analysis\27');
     % Get a logical vector that tells which is a directory.
     dirFlags = [files.isdir];
@@ -58,46 +58,4 @@ legend('rewvalve','','','lick precede','','','','lick not precede','','Location'
 temp_index=find(diff(find(patchesStop_rewvalve{good_trials(j)} > 0.5)) > 2);
 temp_vec=diff(find(patchesStop_rewvalve{good_trials(j)} > 0.5));
 all_rew_intervals=temp_vec(temp_index)
-
-%%
-target_time_licking_preceded=[];
-target_interval_licking_preceded=[];
-target_time_licking_not_preceded=[];
-target_interval_licking_not_preceded=[];
-for j=1:length(good_trials)
-    temp_index=find(diff(find(patchesStop_rewvalve{good_trials(j)} > 0.5)) > 2);
-    temp_vec=diff(find(patchesStop_rewvalve{good_trials(j)} > 0.5));
-    all_rew_intervals=temp_vec(temp_index);
-    for k=1:length(target_rew_time{good_trials(j)})
-        
-        target_time=target_rew_time{good_trials(j)}(k);
-        target_index=all_rew_intervals(target_rew_index{good_trials(j)}(k)-1)
-        if isempty(find(patchesStop_licks{good_trials(j)}(target_time-msLickPrior:target_time)< 0.8))
-            %licking did not precede
-            target_time_licking_preceded = [target_time_licking_preceded target_time];
-            target_interval_licking_preceded = [target_interval_licking_preceded target_index]
-            
-        else
-            %licking preceded
-            target_time_licking_not_preceded = [target_time_licking_not_preceded target_time];
-            target_interval_licking_not_preceded = [target_interval_licking_not_preceded target_index]
-            
-        end
-        
-    end
-    
-end
-figure;
-histogram(target_time_licking_preceded,10)
-hold on
-histogram(target_time_licking_not_preceded,10)
-legend('licking proceeded','licking not proceeded')
-title('reward timing in the patch')
-
-figure;
-histogram(target_interval_licking_preceded,10)
-hold on
-histogram(target_interval_licking_not_preceded,10)
-legend('licking proceeded','licking not proceeded')
-title('interval from the previous reward')
 
