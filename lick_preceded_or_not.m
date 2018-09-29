@@ -11,13 +11,25 @@ target_rew_time=[repmat({0},1,length(patchesStop_rewvalve))];
 target_rew_time_all_trials=[repmat({0},1,length(patchesStop_rewvalve))];
 
 
-for i = 1:length(patchesStop_rewvalve)
+%for i = 1:length(patchesStop_rewvalve)
+    for i=1:16
+        i
     if ~isempty(find(patchesStop_rewvalve{i} > 0.5))
+        
         length(find(diff(find(patchesStop_rewvalve{i} > 0.5)) > 2))+1;
         if ~isempty(find(diff(find(patchesStop_rewvalve{i} > 0.5)) > 1900))
+            disp('aaa')
+            %find the index of all the reward event
             temp1=find(diff(find(patchesStop_rewvalve{i} > 0.5)) > 2);
+            
+            %find the index of all the reward event that is more than 1.9
+            %sec apart
             temp2=find(diff(find(patchesStop_rewvalve{i} > 0.5)) > 1900);
+            
             temp4=intersect(temp1,temp2);
+            
+            %find the timing of very first reward
+            temp5=find(patchesStop_rewvalve{i} > 0.5,1);
             
             
             
